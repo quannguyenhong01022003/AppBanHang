@@ -6,31 +6,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {images, icons, fontsize, colors} from '../constains';
-import {UIButton} from '../components';
+import React, { useState } from 'react';
+import { images, icons, fontsize, colors } from '../constains';
+import { UIButton } from '../components';
 
 const Welcome = () => {
   const [accoutTypes, setaccoutTypes] = useState([
-    {name: 'Influencer', isSelecteed: true},
-    {name: 'Business', isSelecteed: false},
-    {name: 'Individual', isSelecteed: false},
+    { name: 'Influencer', isSelected: true },
+    { name: 'Business', isSelected: false },
+    { name: 'Individual', isSelected: false },
   ]);
 
   return (
     <View style={styles.container}>
       <ImageBackground source={images.background} style={styles.imageGround}>
+
         {/* header */}
         <View style={styles.headerContainer}>
           <View style={styles.header}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image source={icons.fire} style={styles.iconHeader} />
               <Text style={styles.textHeader}>YOURCOMPANY.COM</Text>
             </View>
 
             <Image
               source={icons.question}
-              style={[styles.iconHeader, {tintColor: 'white'}]}
+              style={[styles.iconHeader, { tintColor: 'white' }]}
             />
           </View>
         </View>
@@ -40,56 +41,52 @@ const Welcome = () => {
           <Text
             style={[
               styles.textNavigation,
-              {marginBottom: 8, fontSize: fontsize.h1},
+              { marginBottom: 8, fontSize: fontsize.h1 },
             ]}>
             Welcome to
           </Text>
           <Text
             style={[
               styles.textNavigation,
-              {marginBottom: 8, fontWeight: 'bold', fontSize: fontsize.h2},
+              { marginBottom: 8, fontWeight: 'bold', fontSize: fontsize.h2 },
             ]}>
             YOURCOMPANY.CO!
           </Text>
-          <Text style={[styles.textNavigation, {fontSize: fontsize.h1}]}>
+          <Text style={[styles.textNavigation, { fontSize: fontsize.h1 }]}>
             Please select your accout type
           </Text>
         </View>
 
+        {/* main */}
         <View style={styles.main}>
-          {accoutTypes.map(accoutType => (
+          {accoutTypes.map((accoutType, index) => (
             <UIButton
+              key={index}
               onPress={() => {
-                let newAcoutType = accoutTypes.map(eachAcoutType => {
-                  return {
+                setaccoutTypes(
+                  accoutTypes.map((eachAcoutType, i) => ({
                     ...eachAcoutType,
-                    isSelecteed: eachAcoutType.name == accoutType.name,
-                  };
-                  // if(eachAcoutType.name == accoutType.name){
-                  //   return {...eachAcoutType, isSelecteed: true}
-                  // }
-                  // else{
-                  //   return {...eachAcoutType, isSelecteed:false}
-                  // }
-                });
-                setaccoutTypes(newAcoutType);
+                    isSelected: eachAcoutType.name === accoutType.name,
+                  }))
+                );
               }}
               title={accoutType.name}
-              isSelecteed={accoutType.isSelecteed}
+              isSelected={accoutType.isSelected}
             />
           ))}
         </View>
 
+        {/* footer */}
         <View style={styles.footer}>
           <UIButton title={'Login'.toUpperCase()} />
           <Text
             style={[
               styles.textHeader,
-              {alignSelf: 'center', fontSize: fontsize.h1},
+              { alignSelf: 'center', fontSize: fontsize.h1 },
             ]}>
             You want to register new Accout?
           </Text>
-          <TouchableOpacity onPress={() => {alert('regiter')}}>
+          <TouchableOpacity onPress={() => { alert('regiter') }}>
             <Text style={styles.register}>Resgister</Text>
           </TouchableOpacity>
         </View>
@@ -147,7 +144,7 @@ const styles = StyleSheet.create({
   // footer
   footer: {
     flex: 20,
-   
+
   },
   register: {
     alignSelf: 'center',
