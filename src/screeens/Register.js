@@ -1,9 +1,10 @@
-import { Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import AntDesign from 'react-native-vector-icons/dist/AntDesign';
-import { colors, fontsize } from '../constains'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { fontsize, colors } from '../constains'
 import { validateEmail, validatePassword } from '../ultils/validations'
-const Login = () => {
+import AntDesign from 'react-native-vector-icons/dist/AntDesign';
+
+const Register = () => {
     const [keybroadIsShow, setkeybroadIsShow] = useState(false)
     const [errEmail, seterrEmail] = useState("")
     const [errPassword, seterrPassword] = useState("")
@@ -24,7 +25,7 @@ const Login = () => {
                     <Text style={styles.textHeader}>Already have an </Text>
                     <Text style={styles.textHeader}>Accout?</Text>
                 </View>
-                <AntDesign name="profile" size={100} style={{ color: colors.primary }} />
+                <AntDesign name="profile" size={100} style={{ color: colors.logoRegister }} />
             </View>
 
             {/* main */}
@@ -35,29 +36,36 @@ const Login = () => {
                     onChangeText={(text) => {
                         seterrEmail(validateEmail(text) == true ? '' : 'Email is not correct format')
                     }} />
-                <View style={{ height: 1, backgroundColor: 'black', marginBottom: 10 }} />
+                <View style={{ height: 1, backgroundColor: 'black' }} />
                 <Text style={{ color: 'red' }}>{errEmail}</Text>
+
                 <Text style={styles.textMail}>Password:</Text>
                 <TextInput
                     placeholder='Enter your password'
                     secureTextEntry={true}
+                    onChangeText={
+                        (text) => { seterrPassword(validatePassword(text) == true ? '' : 'Password must be 6 character') }}
+                />
+                <View style={{ height: 1, backgroundColor: 'black' }} />
+                <Text style={{ color: 'red' }}>{errPassword}</Text>
+
+                <Text style={styles.textMail}>Retype password</Text>
+                <TextInput
+                    placeholder='Re-Enter your password'
+                    secureTextEntry={true}
                     onChangeText={(text) => {
-                        seterrPassword(validatePassword(text) == true ? '' : 'Password must be 6 character')
+
                     }} />
                 <View style={{ height: 1, backgroundColor: 'black' }} />
                 <Text style={{ color: 'red' }}>{errPassword}</Text>
+
                 {
                     keybroadIsShow == false &&
                     <View>
                         <TouchableOpacity style={styles.btnLogin}>
-                            <Text style={styles.textLogin}>Login</Text>
+                            <Text style={styles.textLogin}>Register</Text>
                         </TouchableOpacity>
-                        <View style={{ flexDirection: "row", alignSelf: 'center' }}>
-                            <Text style={styles.textMail}>New user?   </Text>
-                            <TouchableOpacity>
-                                <Text style={[styles.textMail, { textDecorationLine: 'underline' }]}>Resgister</Text>
-                            </TouchableOpacity>
-                        </View>
+
                     </View>
                 }
 
@@ -68,10 +76,10 @@ const Login = () => {
             {
                 keybroadIsShow == false &&
                 <View style={styles.footer}>
-                    <View style={{ flexDirection: 'row', marginHorizontal: 20, alignItems: 'center' }}>
-                        <View style={{ height: 1, backgroundColor: 'black', flex: 1 }} />
+                    <View style={{ flexDirection: 'row', marginHorizontal: 20, alignItems: 'center' , marginTop: 20}}>
+                        <View style={{ height: 1, backgroundColor: 'white', flex: 1 }} />
                         <Text style={styles.textFooter}>Use other method</Text>
-                        <View style={{ height: 1, backgroundColor: 'black', flex: 1 }} />
+                        <View style={{ height: 1, backgroundColor: 'white', flex: 1 }} />
                     </View>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 20 }}>
                         <AntDesign name="facebook-square" size={40} style={{ color: colors.facebook }} />
@@ -88,15 +96,16 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register
 
 const styles = StyleSheet.create({
     container: {
-        flex: 100
+        flex: 100,
+        backgroundColor: colors.primary
     },
     // Header
     header: {
-        flex: 30,
+        flex: 25,
         justifyContent: 'space-around',
         alignItems: 'center',
         flexDirection: 'row',
@@ -105,14 +114,17 @@ const styles = StyleSheet.create({
     textHeader: {
         fontWeight: '900',
         fontSize: fontsize.h5,
-        color: '#000000'
+        color: '#ffffff'
     },
 
     // Main
     main: {
-        flex: 50,
+        flex: 55,
         marginHorizontal: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 20
     },
     textMail: {
         fontSize: fontsize.h2,
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         width: '50%',
         alignSelf: 'center',
-        marginTop: 50,
+        marginTop: 30,
         borderRadius: 10
     },
     textLogin: {
@@ -137,11 +149,10 @@ const styles = StyleSheet.create({
     // Footer
     footer: {
         flex: 20,
-        backgroundColor: '#ffffff'
     },
     textFooter: {
         fontSize: fontsize.h3,
         marginHorizontal: 10,
-        color: 'black'
+        color: 'white'
     }
 })
